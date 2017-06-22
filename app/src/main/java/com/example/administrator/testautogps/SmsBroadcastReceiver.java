@@ -31,7 +31,9 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 if (msg.getOriginatingAddress().equals("+8615602907440")) {
                     //TODO
 //                    Toast.makeText(context,"Hello!!!!",Toast.LENGTH_LONG).show();
-                    new MainActivity().doSendSMSTo(msg.getOriginatingAddress(),"Get SMS!!!");
+//                    new MainActivity().doSendSMSTo(msg.getOriginatingAddress(),"Get SMS!!!");
+                    new MainActivity().broadcastCall();
+                    LogUtil.d("lalalalala","~~~~~~--1---~~~~~~");
                 }
 
             }

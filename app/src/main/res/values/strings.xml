@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TestAutoGps</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_quit">退出</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

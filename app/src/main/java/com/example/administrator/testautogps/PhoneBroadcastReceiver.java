@@ -49,7 +49,8 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
                     LogUtil.d(TAG,"响铃:来电号码"+incomingNumber);//输出来电号码
                     if(incomingNumber.equals("15602907440"))
                     {
-                        new MainActivity().doSendSMSTo(incomingNumber,"Get Phone!!!");
+                        //do work
+                        new MainActivity().broadcastCall();
                     }
                     break;
             }
