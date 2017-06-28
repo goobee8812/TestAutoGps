@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         setContentView(R.layout.activity_main);
         sendBtn = (Button)findViewById(R.id.sendMsg);
         positionTv = (TextView)findViewById(R.id.positionTv);
+
         //初始化数据库
         Connector.getDatabase();
         //读取数据库数据
@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
             sb.append(position.getProvider()+"--"+position.getAddress()+position.getAccuracy() + "米--" + position.getPoiName() + "--" +position.getTime() + "\n" );
             sb.append("---------\n");
         }
+        sb.append("测试");
         positionTv.setText(sb);
+//-----------------------------------定位初始化
         //初始化定位
         mLocationClient = new AMapLocationClient(MyApplication.getContext());
         mLocationOption = new AMapLocationClientOption();
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         mLocationOption.setNeedAddress(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
+
+
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,9 +127,15 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                 // 定位完成
                 case Utils.MSG_LOCATION_FINISH:
                     AMapLocation loc = (AMapLocation) msg.obj;
-                    String result = Utils.getLocationStr(loc);
-//                    positionTv.setText(result);
-//                    doSendSMSTo("15602907440",result);
+                    final String result = Utils.getLocationStr(loc);
+                    positionTv.setText(result);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            doSendSMSTo("15602907440",result);
+                        }
+                    }).start();
+
                     break;
                 //停止定位
                 case Utils.MSG_LOCATION_STOP:
@@ -133,7 +143,9 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
                     break;
                 case Utils.REQUEST_COMMAND:  //需要发送数据
                     // 启动定位
-                    mLocationClient.startLocation();
+//                    mLocationClient.startLocation();
+//                    positionTv.setText("来电话了！！");
+//                    LogUtil.d("Hello","hhhhhhhhhhhhhhhhhhhh= ");
                     break;
                 default:
                     break;
@@ -153,9 +165,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         Message msg = handler.obtainMessage();
         msg.what = Utils.REQUEST_COMMAND;
         handler.sendMessage(msg);
-        LogUtil.d("broadcast","Enther");
+        LogUtil.d("broadcast","Enther----------------------");
     }
 
+    public void broadcastReCall(){
+        broadcastCall();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -181,12 +196,12 @@ public class MainActivity extends AppCompatActivity implements AMapLocationListe
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            moveTaskToBack(false);
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

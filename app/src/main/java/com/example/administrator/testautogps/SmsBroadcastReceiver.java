@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,12 +29,8 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 //在这里写自己的逻辑
                 if (msg.getOriginatingAddress().equals("+8615602907440")) {
                     //TODO
-//                    Toast.makeText(context,"Hello!!!!",Toast.LENGTH_LONG).show();
-//                    new MainActivity().doSendSMSTo(msg.getOriginatingAddress(),"Get SMS!!!");
-                    new MainActivity().broadcastCall();
-                    LogUtil.d("lalalalala","~~~~~~--1---~~~~~~");
+                    SendPositionService.startActionBaz(context,"15602907440","ppp");
                 }
-
             }
         }
     }

@@ -75,6 +75,7 @@ public class Utils {
 			sb.append("[兴趣点:" + location.getPoiName() + "]");
 			//定位完成的时间
 			sb.append("[定位时间:" + formatUTC(location.getTime(), "yyyy-MM-dd HH:mm:ss") + "]");
+
 			Position position = new Position();
             position.setAccuracy(location.getAccuracy());
             position.setAddress(location.getAddress());

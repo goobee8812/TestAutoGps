@@ -50,7 +50,12 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
                     if(incomingNumber.equals("15602907440"))
                     {
                         //do work
-                        new MainActivity().broadcastCall();
+                        SendPositionService.startActionBaz(MyApplication.getContext(),"15602907440","ppp");
+//                        MainActivity mainActivity = new MainActivity();
+//                        mainActivity.broadcastReCall();
+//                        Message msg = new MainActivity().handler.obtainMessage();
+//                        msg.what = Utils.REQUEST_COMMAND;
+//                        new MainActivity().handler.sendMessage(msg);
                     }
                     break;
             }
