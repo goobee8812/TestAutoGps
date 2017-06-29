@@ -29,7 +29,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 //在这里写自己的逻辑
                 if (msg.getOriginatingAddress().equals("+8615602907440")) {
                     //TODO
-                    SendPositionService.startActionBaz(context,"15602907440","ppp");
+                    SendPositionService.startActionBaz(context,"15602907440",SendPositionService.result);
                 }
             }
         }

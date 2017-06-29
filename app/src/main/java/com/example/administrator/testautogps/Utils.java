@@ -3,11 +3,14 @@
  */
 package com.example.administrator.testautogps;
 
+import android.telephony.PhoneNumberUtils;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 
 import com.amap.api.location.AMapLocation;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -43,6 +46,8 @@ public class Utils {
 	
 	public final static String KEY_URL = "URL";
 	public final static String URL_H5LOCATION = "file:///android_asset/location.html";
+	private static final String TAG = "Utils";
+
 	/**
 	 * 根据定位结果返回定位信息的字符串
 	 * @param location
@@ -75,6 +80,8 @@ public class Utils {
 			sb.append("[兴趣点:" + location.getPoiName() + "]");
 			//定位完成的时间
 			sb.append("[定位时间:" + formatUTC(location.getTime(), "yyyy-MM-dd HH:mm:ss") + "]");
+
+			LogUtil.d(TAG,"-------------------------------------------GET");
 
 			Position position = new Position();
             position.setAccuracy(location.getAccuracy());
@@ -109,5 +116,23 @@ public class Utils {
 			sdf.applyPattern(strPattern);
 		}
 		return sdf == null ? "NULL" : sdf.format(l);
+	}
+
+
+	/**
+	 * 调起系统发短信功能
+	 * @param phoneNumber
+	 * @param message
+	 */
+	public static void doSendSMSTo(String phoneNumber,String message){
+		if(PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)){
+			SmsManager smsManager = SmsManager.getDefault();
+			//自动拆分短信
+			List<String> divideContents = smsManager.divideMessage(message);
+			for (String text : divideContents) {
+				smsManager.sendTextMessage(phoneNumber, null, text, null, null); //无返回数据
+				LogUtil.d("------------","Sending");
+			}
+		}
 	}
 }

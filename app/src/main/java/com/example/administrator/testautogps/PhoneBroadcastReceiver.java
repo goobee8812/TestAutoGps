@@ -49,13 +49,8 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
                     LogUtil.d(TAG,"响铃:来电号码"+incomingNumber);//输出来电号码
                     if(incomingNumber.equals("15602907440"))
                     {
-                        //do work
-                        SendPositionService.startActionBaz(MyApplication.getContext(),"15602907440","ppp");
-//                        MainActivity mainActivity = new MainActivity();
-//                        mainActivity.broadcastReCall();
-//                        Message msg = new MainActivity().handler.obtainMessage();
-//                        msg.what = Utils.REQUEST_COMMAND;
-//                        new MainActivity().handler.sendMessage(msg);
+                        //TODO
+                        SendPositionService.startActionBaz(MyApplication.getContext(),"15602907440",SendPositionService.result);
                     }
                     break;
             }
