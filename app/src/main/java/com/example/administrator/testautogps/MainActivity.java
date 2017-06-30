@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 new SendPositionService().broadcastCall();
             }
         });
+//        new SendPositionService().init();
+        new SendPositionService().mLocationClient.startLocation();
     }
     @Override
     protected void onDestroy() {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -31,7 +32,7 @@ public class SendPositionService extends IntentService implements AMapLocationLi
     private static final String EXTRA_PARAM2 = "com.example.administrator.testautogps.extra.PARAM2";
 
     //声明AMapLocationClient类对象
-    private AMapLocationClient mLocationClient;
+    public AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
 
     public static String result;
@@ -51,14 +52,14 @@ public class SendPositionService extends IntentService implements AMapLocationLi
         //设置定位回调监听
         mLocationClient.setLocationListener(this);
 //        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
-//        mLocationOption.setInterval(2000);
+        mLocationOption.setInterval(300000);  //5分钟定位一次
         //获取一次定位结果：
         //该方法默认为false。
-        mLocationOption.setOnceLocation(true);
+        mLocationOption.setOnceLocation(false);
         //获取最近3s内精度最高的一次定位结果：
         //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。
         //如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
-        mLocationOption.setOnceLocationLatest(true);
+        //mLocationOption.setOnceLocationLatest(true);
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
         //给定位客户端对象设置定位参数
@@ -187,6 +188,9 @@ public class SendPositionService extends IntentService implements AMapLocationLi
         msg.what = Utils.REQUEST_COMMAND;
         handler.sendMessage(msg);
         LogUtil.d("broadcast","Enther----------------------");
+    }
+    public void init(){
+        LogUtil.d(TAG,"Action!!!------------------");
     }
 
     @Override
